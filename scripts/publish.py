@@ -19,6 +19,7 @@ import subprocess
 import toml  # type: ignore
 
 from utils import die, for_each_package, Package, get_packages
+from security import safe_command
 
 
 def get_server_version() -> str:
@@ -34,8 +35,7 @@ def run_command(args: list[str]) -> None:
 
     print(f"Running {cmd}")
 
-    build_process = subprocess.Popen(
-        args=args,
+    build_process = safe_command.run(subprocess.Popen, args=args,
         stdout=sys.stdout,
         stderr=sys.stderr,
     )
